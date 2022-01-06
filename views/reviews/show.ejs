@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <style>
+      body {
+          background-color: #FFDEB8;
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+
+      <div class="card">
+        <h5 class="card-header p-2" data-search-highlight="numID">후기 <%= review.numId %></h5>
+        <div class="row">
+
+          <div class="col-md-7 col-lg-8 col-xl-9 order-sm-2 order-md-1">
+            <div class="post-body p-2" data-search-highlight="body"><%= review.contents %></div>
+          </div>
+
+          <div class="col-md-5 col-lg-4 col-xl-3 order-sm-1 order-md-2">
+            <div class="post-info card m-2 p-2">
+              <div class="border-bottom pb-1 mb-1">
+                <div><span>작성자</span> : <span data-search-highlight="author"><%= review.author ? review.author.username : "" %></span></div>
+              </div>
+              <div><span>작성 일시</span> : <span data-date-time="<%= review.createdAt %>"></span></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="mt-3">
+        <a class="btn btn-primary"  style="background: #F6C488; border: 3px solid #787878; color: #000000;" href="/reviews<%= getPostQueryString() %>">이전</a>
+      </div>
+    </div>
+  </body>
+</html>

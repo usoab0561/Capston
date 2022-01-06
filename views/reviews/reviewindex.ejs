@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <meta charset = "UTF-8">
+    <title>토끼지마켓</title>
+    <!-- font 설정 -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <style>
+      body{
+        text-decoration: none;
+        list-style: none;
+        background-color:#FFDEB8;
+      }
+      .navbar{
+        background-color:#FFDEB8;
+        font-family: 'Nanum Gothic', sans-serif;
+      }
+      .navbar-brand > #h1{
+        color: #717171;
+        font-weight: 800;
+      }
+      .navbar-brand > #h1{
+        top:0px;
+      }
+      .navbar-brand > #h3{
+        color: #717171;
+        font-weight: 800;
+      }
+      .collapse > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .header2 > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+
+     #main_header > #image_rabbit {
+       position: absolute;
+       left: 260px;
+       top: 85px;
+     }
+
+     #main_header > #title {
+       font-family: 'Nanum Gothic', sans-serif;
+       text-align: center;
+
+       color: #717171;
+       position: absolute;
+       left: 410px;
+       top: 230px;
+     }
+
+     #main_header > #image_carrot {
+       position: absolute;
+       left: 660px;
+       top: 140px;
+     }
+
+     #main_header > #title2 {
+       font-family: 'Nanum Gothic', sans-serif;
+       text-align: center;
+
+       color: #717171;
+       position: absolute;
+       left: 800px;
+       top: 230px;
+     }
+
+     #main_header > #search {
+       width: 350px;
+       position: absolute;
+       left: 530px;
+       top: 455px;
+     }
+
+     #main_header > #search_button {
+       position: absolute;
+       left: 832px;
+       top: 457px;
+     }
+
+     select {
+         font-family: 'Nanum Gothic Coding', monospace;
+         border: none;
+         outline: #C2C2C2;
+         width: 150px;
+         height: 50px;
+         font-size: 30px;
+         background: #FFEEDB;
+         color: #9E9E9E;
+         text-align: center;
+         position: absolute;
+         left: 350px;
+         top: 450px;
+
+     }
+     .sent{
+        flex-direction: row-reverse;
+    }
+
+    .sent .message{
+        background-color: #ffeb33;
+    }
+    .received .message{
+        background: #fff;
+    }
+   </style>
+ </head>
+ <body>
+   <header id="main_header">
+    <%- include('../partials/sim2_nav') %>
+
+
+    </header>
+
+                      <div class="card" style= "background: #FFDEB8; border: 0px; width:50%;height:92vh;
+                      margin: 0 auto; /* Added */
+                      float: none; /* Added */
+                      margin-bottom: 10px; /* Added */ ">
+
+                      <% if(isAuthenticated){ %>
+                        <input type="text" id="usernicknamefornotuse" class="form-control"
+                        style="border: 1px solid #707070; background: #FFFFFF; font-size: 30px; color:#717171; font-family: 'Segoe UI';font-weight: bold"
+
+                         value = "닉네임 <%=currentUser.username%>" readonly>
+
+                        <% } %>
+                        <div id="messages" class="card-block" style=
+                        "overflow:scroll;    border: 3px solid #707070; background: #F1FBCF;
+                        /* background-image : url('/image/rabbit_.png'); */
+                        background-size: 300px;
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        padding:0;
+                        ">
+
+                        <div class="p" id='div_btn' style="padding: 0px;">
+                        </div>
+                      </div>
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <!-- socekt.io 가져오는것, 필수 -->
+    <!-- <script type="text/javascript" src="https://hidden-cove-14850.herokuapp.com/socket.io/socket.io.js"></script>    -->
+    <!-- socket.io heroku -->
+
+
+
+    <script>
+
+      //console.log(roomscount);
+          let exportroomscount;
+          let exportusernamearray = [];
+          let usernamearray_except_user = [];  // 자기 제외 쿼리
+          let socket = io.connect();
+          let chatroom_id_mix =[];
+          let possiblerooms = [];
+          let temp_possiblerooms = [];      // sort해서 순서대로 만드려고.
+          let finalroom = [];
+          var c = 0;
+
+          let reviews_receiver =[];
+        // Check for connection
+            if(socket !== undefined){
+                //console.log('Connected to socket... in chatindexsesssss');
+
+                socket.on('status', function(data){
+                    // get message status
+                    setStatus((typeof data === 'object')? data.message : data);
+
+                    // If status is clear, clear text
+                    if(data.clear){
+                        textarea.value = '';
+                    }
+                });
+            }
+
+            socket.on('exportroomscount', function(data){
+                exportroomscount = data;
+               // var tar = document.querySelector('#test');
+               // test라고 query selector써서 다른곳에서 쓸 수 있게 만듬. 현재 사용 X
+            socket.on('exportusernamearray', function(data){
+                exportusernamearray = data;
+               // var tar2 = document.querySelector('#test2');
+
+
+
+
+
+
+                                  //console.log(exportroomscount + 'zz');
+
+
+                                  //console.log(possiblerooms);
+
+                                  usernamearray_except_user = exportusernamearray; // 일단넣어주고
+                                  //console.log(exportusernamearray);
+
+                                  var currentUser = JSON.parse('<%-JSON.stringify(currentUser.username)%>'); // current user(로그인한 유저)를 ejs에서 JSON으로 가져와서 사용.
+
+                                  for(let i=0; i<exportroomscount; i++){
+                                  // 채팅 방 만들기. 버튼으로 할때필요 + possiblerooms 만들고 emit해줄거임.
+                                  // currentuser + 가능한 id조합으로 possibleroom을 만든다.
+                                        for(let j=i+1; j<exportroomscount; j++){
+
+                                                    console.log(`${i+1},${j+1}`);
+                                                    temp_possiblerooms[0] = `${exportusernamearray[i]}`;
+                                                    temp_possiblerooms[1] = `${exportusernamearray[j]}`;
+                                                    if(temp_possiblerooms[0] != currentUser && temp_possiblerooms[1] != currentUser){
+                                                      continue;  // 둘다 커랜트 유저가 아니면 굳이 possible룸에 넣을 필요가 없지요. sort도
+                                                    }
+                                                    temp_possiblerooms.sort();
+                                                    possiblerooms[c] = 'chats/' + temp_possiblerooms[0] + ',' + temp_possiblerooms[1];
+                                                    c++;
+                                        }
+                                  }
+                                  c= 0;
+                                  //console.log(possiblerooms);
+
+                                  socket.emit('possiblerooms', possiblerooms);  // emit한다 possible rooms로 ㅋㅋ
+
+                                  usernamearray_except_user  = exportusernamearray.filter((element) => element !== currentUser);
+                                  //console.log(usernamearray_except_user);
+
+
+                                  socket.on('finalroom', function(data){
+                                    finalroom = data;
+                                    //console.log(finalroom);
+                                  $(document).ready(function(){
+                                  var str_html = '';
+                                  //var rev_html = '';
+
+                          // 여기가 현재 만들어진 채팅방 목록에서 할 수 있는거...
+                          //finalroom zz
+                          // let str = finalroom[0].replace(/chats\//g,"");
+                          // console.log(str);
+                          for(var i in finalroom) { // 객체 가져오면 name즉 채팅방이름만 collection에서 가져옴 ex chats/bubble2jh,bubble3jh
+                                                    // collection 다 수정해줌. currentuser없애고 chats 없애고,,, 휴
+                                  // console.log(allchatroomsarray[i].name);
+                                  finalroom[i] = finalroom[i].replace(/chats\//g,"");
+                                  finalroom[i] = finalroom[i].replace(/,/g,"");
+                                  finalroom[i] = finalroom[i].replace(currentUser,"");
+                          };
+
+                          //console.log(finalroom);
+                          //console.log(finalroom.length);
+
+                          for (var i = 0; i < finalroom.length; i++) {
+
+                            var review_btn = '<button type="button" class="" id="reviewbtn" style=" width:100%; height:33.33vh; background-color:#F1FBCF; text-align:right; padding-right: 20%; margin: 0; font-size: 30px; font-family: \'Segoe UI\';font-weight: bold; background-image : url(\'/image/rabbit_.png\');  background-size: 15%;  background-repeat: no-repeat; background-position: 25% 50%;">{} 님 </br> 후기 작성하기</button>';
+
+                            review_btn = review_btn.replace('{}', finalroom[i]);
+                            str_html = str_html + review_btn + '\n';
+                          }
+
+                          $('#div_btn').html(str_html);
+
+                          // 버튼을 동적연결한다.
+                          $(document).on("click", "#reviewbtn", function(){
+                            var ridx = $(this).index();
+                            alert('{}님에 대한 후기를 작성합니다.'.replace('{}', finalroom[ridx]));  // 대화할상대
+
+                            //reviews_receiver[0] = finalroom[ridx];
+                            //reviews_receiver[1] = currentUser;
+                            //reviews_receiver.sort();
+                            // ㅎㅎ
+                            document.write('<form action="/reviews/new" id="rev_form" method="get"><input type="hidden" name="toreceiver" value="'+ finalroom[ridx] +'"></form>');
+                            document.getElementById("rev_form").submit();
+                          });
+                  });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

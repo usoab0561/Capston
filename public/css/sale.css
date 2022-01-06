@@ -1,0 +1,93 @@
+*{
+    text-decoration: none;
+    list-style: none;
+    background-color:#FFDEB8;
+}
+.header{
+    display: flex;
+}
+.first_header > .link {
+    display:flex;
+    width: 315px;
+    text-decoration: none;
+    list-style: none;
+}
+.first_header > .link > #h1{
+    margin-top: 23px;
+    margin-left: 14px;
+    font-size: 40px;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 800;
+    color: #717171;
+}
+.first_header > .link > #h2{
+    margin-left: 0px;
+    width: 71px;
+    height: 106px; 
+}
+.first_header > .link >  #h3{
+    margin-top: 23px;
+    margin-left:0px;
+    width: 58px;
+    height: 58px;
+    font-size: 40px;
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: 800;
+    color: #717171;
+}
+
+.middle_header{
+    width: 850px;
+    height: 75px;
+    margin-right:10px;
+    background-color: white;
+    border: 1px solid  #707070;
+}
+.middle_header > .nav{
+    text-decoration: none;
+    list-style: none;
+    background-color: white;
+    margin-top:10px;
+}
+.middle_header > .nav a:nth-child(1){
+    font-size: 25px;
+    font-weight: 900;
+    text-align: center;
+    font-family:'Noto Sans KR', sans-serif;
+    color:#717171;
+}
+.middle_header > .nav a:nth-child(2){
+    font-size: 25px;
+    font-weight: Medium;
+    text-align: center;
+    font-family:'Noto Sans KR', sans-serif;
+    color:#717171;
+}
+.middle_header > .nav a:nth-child(3){
+    font-size: 25px;
+    font-weight: Medium;
+    text-align: center;
+    font-family:'Noto Sans KR', sans-serif;
+    color:#717171;
+}
+.end_header {   
+    margin:15px; 
+}
+.end_header > .nav a:nth-child(1){
+    font-size: 20px;
+    font-weight: Bold;
+    text-align: center;
+    font-family:'Nanum Gothic', sans-serif;
+    color:#717171;
+}
+.center{
+    margin:10px;
+    display: flex;
+    border: 2px dashed #707070;
+    background-color: #F1FBCF;
+}
+.card{
+    margin:40px;
+}
+.card-body{
+}

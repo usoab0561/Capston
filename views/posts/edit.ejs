@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('../partials/head') %>
+</head><style>
+  body{
+    text-decoration: none;
+    list-style: none;
+    padding: 50px;
+  background-color:#FFDEB8;
+  }
+  .navbar{
+    background-color:#FFDEB8;
+    font-family: 'Nanum Gothic', sans-serif;
+  }
+  .navbar-brand > #h1{
+    color: #717171;
+    font-weight: 800;
+  }
+  .navbar-brand > #h1{
+    top:0px;
+  }
+  .navbar-brand > #h3{
+    color: #717171;
+    font-weight: 800;
+  }
+  .collapse > .navbar-nav{
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #717171;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  .header2 > .navbar-nav{
+    font-family: 'Nanum Gothic', sans-serif;
+    color: #717171;
+    font-weight: 800;
+    font-size: 20px;
+  }
+  /* body {
+
+    font-family: 'Nanum Gothic', sans-serif;
+    background-color: #FFDEB8;
+    padding: 50px;
+  } */ 
+
+  .post_show_title {
+    background-color: #ffffff;
+    position: relative;
+    padding: 50px 120px 120px 395px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #787878;
+  }
+
+
+  .post_show_title .post_show_img>img {
+    height: 350px;
+    width: 350px;
+    position: relative;
+    bottom: 120px;
+    right: 380px;
+    border: 1px solid #e8e8e8;
+  }
+
+  .post_show_title>h2 {
+    margin: 0 100px 15px;
+    padding: 0 100px 20px;
+    border-bottom: 2px solid #333;
+    font-size: 24px;
+    color: #232323;
+    line-height: 26px;
+  }
+
+  .post_show_title table th,
+  .post_show_title table td {
+    padding: 20px 20px;
+    font-size: 18px;
+    text-align: left;
+  }
+
+  .post_show_title table th {
+    min-width: 150px;
+    font-size: 22px;
+    color: #444;
+    text-align: left;
+  }
+
+  .post_show_title table td {
+    font-size: 20px;
+    color: #444;
+  }
+
+  .post_show_title table td b {
+    font-size: 22px;
+    color: #444;
+  }
+
+  .post_show_title tbody {
+    position: relative;
+    right: 100px;
+  }
+
+  .chatbtn .btn {
+    position: relative;
+    right: -100px;
+    bottom: 100px;
+    display: inline-block;
+    width: 136px;
+    height: 42px;
+    font-size: 16px;
+    color: #fff;
+    border-radius: 2px;
+    background: #F6C488;
+  }
+</style>
+<body>
+  <%- include('../partials/sim2_nav') %>
+    <form action="/posts/<%= post._id %>?_method=put<%= getPostQueryString(true) %>" enctype="multipart/form-data"
+      method="post">
+      <div class="post_show_title">
+
+        <h2>제목 <input type="text" id="title" name="title" value="<%= post.title %>">
+          <% if(errors.title){ %>
+            <span class="invalid-feedback">
+              <%= errors.title.message %>
+            </span>
+            <% } %>
+        </h2>
+        <table>
+
+          <colgroup>
+            <col>
+          </colgroup>
+          <tbody>
+            <tr>
+              <th>상품 사진</th>
+              <td><input type="file" name="newAsttachment" class="form-control-file" id="attachment" multiple></td>
+            </tr>
+            <tr>
+              <th>가격</th>
+              <td>
+                <input type="text" id="price" name="price" value="<%= post.price %>"
+                  class="form-control <%= (errors.title)?'is-invalid':'' %>">
+                <% if(errors.price){ %>
+                  <span class="invalid-feedback">
+                    <%= errors.price.message %>
+                  </span>
+                  <% } %>
+              </td>
+            </tr>
+            <tr>
+              <th>상품상세</th>
+              <td>
+                <textarea id="body" name="contents" rows="5"
+                  class="form-control <%= (errors.contents)?'is-invalid':'' %>"><%= post.contents %></textarea>
+                <% if(errors.contents){ %>
+                  <span class="invalid-feedback">
+                    <%= errors.contents.message %>
+                  </span>
+                  <% } %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div>
+          <button style="
+          position: relative;
+          width: 120px;
+          left:200px;
+          top:50px;
+          font-size: 16px;
+          color: #fff;
+          border-radius: 2px;
+          background: #F6C488; border: 3px solid #787878; color: #000000;"class="chatbtn" href="/posts<%= getPostQueryString() %>">이전</button>
+          <button style="
+          position: relative;
+          width: 120px;
+          left:200px;
+          top:50px;
+          font-size: 16px;
+          color: #fff;
+          border-radius: 2px;
+          background: #F6C488; border: 3px solid #787878; color: #000000;"type="submit" class="chatbtn">작성완료</button>
+        </div>
+
+      </div>
+    </form>
+</body>
+
+</html>

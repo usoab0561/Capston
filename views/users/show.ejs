@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <style>
+      body{
+        text-decoration: none;
+        list-style: none;
+        background-color:#FFDEB8;
+      }
+      .navbar{
+        background-color:#FFDEB8;
+        font-family: 'Nanum Gothic', sans-serif;
+      }
+      .navbar-brand > #h1{
+        color: #717171;
+        font-weight: 800;
+      }
+      .navbar-brand > #h1{
+        top:0px;
+      }
+      .navbar-brand > #h3{
+        color: #717171;
+        font-weight: 800;
+      }
+      .collapse > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .header2 > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .collapse > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+      .header2 > .navbar-nav{
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+
+      #box1 {
+        background: #F1FBCF 0% 0% no-repeat padding-box;
+        border: 2px solid #C2C2C2;
+        opacity: 1;
+        width: 400px;
+        height: 675px;
+      }
+
+      #sbox {
+        position: relative;
+        background: #E3E3E3 0% 0% no-repeat padding-box;
+        border: 2px solid #C2C2C2;
+        opacity: 1;
+        width: 400px;
+        height: 20px;
+        top: -470px;
+        left: -14px;
+      }
+
+      #edit_bt {
+        position: relative;
+        top: 60px;
+        left: -13px;
+     }
+
+     #purchase_bt {
+       position: relative;
+       top: 70px;
+        left: -13px;
+     }
+
+     #sales_bt {
+       position: relative;
+       top: 80px;
+        left: -13px;
+     }
+
+     #chat_bt {
+       position: relative;
+       top: 90px;
+        left: -13px;
+     }
+
+     #review_bt {
+       position: relative;
+       top: 100px;
+        left: -13px;
+     }
+
+     #writerv_bt {
+       position: relative;
+       top: 110px;
+        left: -13px;
+     }
+
+     #report_bt {
+       position: relative;
+       top: 120px;
+        left: -13px;
+     }
+
+     #title {
+       color: #000000;
+       opacity: 1;
+       text-align: center;
+       vertical-align: middle;
+       top: 300px;
+     }
+
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/sim2_nav') %>
+
+    <div id="box1" class="container mb-3">
+      <div id="title">
+        <h3 class="contentBoxTop" style="font: Segoe UI; font-weight: bold; top: 100px; left: 100px;"><%= user.username %> 님의 페이지</h3>
+      </div>
+
+      <div id="edit_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/users/<%= user.username %>/edit" style="text-align: left; background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box; border: 3px solid var(--unnamed-color-707070); background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+              회원정보 수정<br>
+              휴대전화 등 내 정보를 변경하세요.
+            </a>
+          </a>
+        <% } %>
+      </div>
+      <div id="purchase_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/sale/<%= user.username %>/mytrade" style="text-align: left; background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box; border: 3px solid var(--unnamed-color-707070); background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            내가 작성한 게시판 목록<br>
+            내가 작성한 게시판 목록을 확인하세요.
+          </a>
+        <% } %>
+      </div>
+      <div id="sales_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/sale/<%= currentUser.username %>" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            판매내역<br>
+            나의 상품 판매내역을 확인하세요.
+          </a>
+        <% } %>
+      </div>
+      <div id="chat_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/chatindex" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            채팅목록<br>
+            진행 중인 채팅 목록을 확인하세요.
+          </a>
+        <% } %>
+      </div>
+      <div id="review_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/reviews/<%= user.username %>/myreview" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            거래후기<br>
+            나의 거래 후기를 확인하세요.
+          </a>
+        <% } %>
+      </div>
+      <div id="writerv_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/reviews/reviewindex" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            거래후기 작성<br>
+            거래후기를 작성하세요.
+          </a>
+        <% } %>
+      </div>
+      <div id="report_bt">
+        <% if(isAuthenticated && currentUser.username == user.username){ %>
+          <a class="btn btn-primary" href="/users/<%= user.username %>/report1" style="text-align: left; background: #FFFFFF 0% 0% no-repeat padding-box; border: 2px solid #707070; opacity: 1; color: #000000; font: normal normal normal Segoe UI; width: 397px; height: 70px;">
+            신고하기<br>
+            매뉴얼을 확인하고 신고 절차를 진행하세요.
+          </a>
+        <% } %>
+      </div>
+      <div id="sbox">
+      </div>
+    </div>
+  </body>
+</html>

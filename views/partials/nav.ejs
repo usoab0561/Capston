@@ -1,0 +1,22 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light ">
+  <!-- ㄱㄱ mb-3을 뺐음.-->
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a href="/posts" class="nav-link">판매 게시판</a></li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <% if(isAuthenticated){ %>
+          <li class="nav-item"><a href="/users/<%= currentUser.username %>" class="nav-link">마이페이지</a></li>
+          <li class="nav-item"><a href="/logout" class="nav-link">로그아웃</a></li>
+        <% } else { %>
+          <li class="nav-item"><a href="/users/identity" class="nav-link">회원가입</a></li>
+          <li class="nav-item"><a href="/login" class="nav-link">로그인</a></li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,28 @@
+
+
+<form action="<%= actionUrl %><%= getPostQueryString(true) %>" method="post">
+  <fieldset <%= !isAuthenticated?'disabled':'' %>>
+    <% if(parentComment){ %>
+      <input type="hidden" name="parentComment" value="<%= parentComment %>">
+    <% } %>
+    <div class="row">
+      <div class="col-11">
+        <textarea style="width:90%; margin-left: 5%; font-size: 16px;" name="text" rows="3" class="form-control <%= (commentError._id == comment._id && commentError.parentComment == parentComment && commentError.errors.text)?'is-invalid':'' %>"><%= (commentForm._id == comment._id)?commentForm.form.text:comment.text %></textarea>
+      </div>
+      <div class="col-1">
+        <% if(comment._id){ %>
+          <button style="margin-top: 20%; margin-left: -35%; background: #F6C488; border: 3px solid #787878; color: #000000; width:80px; height: 40px;" type="submit">수정</button>
+          <br><a style="text-decoration: none; margin-left: -20%;" href="javascript:void(0)" onclick="$('#comment-<%= comment._id %>').removeClass('comment-edit-enabled')">취소</a>
+        <% } else if(parentComment) {%>
+          <button style="margin-left: -45%; background: #F6C488; border: 3px solid #787878; color: #000000; width:100px; height: 60px;" type="submit">답글 달기</button>
+          <br><a style="text-decoration: none; margin-left: -10%;" href="javascript:void(0)" onclick="$('#comment-<%= parentComment %>').removeClass('comment-reply-enabled')">취소</a>
+        <% } else { %>
+          <button style="margin-left: -45%; font-size: 15px; font-family: 'Nanum Gothic', sans-serif; background: #F6C488; border: 3px solid #787878; color: #000000; " type="submit" class="btn btn-primary h-100 mr-2">댓글 달기</button>
+        <% } %>
+      </div>
+    </div>
+    <% if(commentError._id == comment._id && commentError.parentComment == parentComment && commentError.errors.text){ %>
+      <span class="invalid-feedback d-block"><%= commentError.errors.text.message %></span>
+    <% } %>
+  </fieldset>
+</form>

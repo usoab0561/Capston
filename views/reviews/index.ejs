@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head2') %>
+    <style>
+      body {
+          background-color: #FFDEB8;
+      }
+
+      #new_bt {
+        position: absolute;
+        left: 1000px;
+       }
+
+       #select {
+           width: 100px;
+           height: 30px;
+           text-align: center;
+           position: absolute;
+           left: 350px;
+           top: 105px;
+       }
+    </style>
+  </head>
+  <script>
+    // ㅎㅎ 
+            function getQueryStringObject() {
+                var a = window.location.search.substr(1).split('&');
+                if (a == "") return {};
+                var b = {};
+                for (var i = 0; i < a.length; ++i) {
+                    var p = a[i].split('=', 2);
+                    if (p.length == 1)
+                        b[p[0]] = "";
+                    else
+                        b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+                
+                      }
+                    b.toreceiver
+            
+             location.href="/reviews/new?toreceiver="+ b.toreceiver;
+         
+            }
+         
+  </script>
+  <body>
+    <%- include('../partials/sim2_nav') %>
+    <div id="container" class="container mb-3">
+
+      <h2 class="mb-3" style="text-align: left; font: HYGothic-Extra; font-weight: bold; color: #787878; font-size: 30px;">후기 목록</h2>
+
+      <table class="board-table table table-sm border-bottom">
+        <thead class="thead-light" style="background-color:#eeeeee; text-align:center;">
+          <colgroup id="hz">
+            <col width="15%">
+            <col width="15%">
+            <col width="15%">
+            <col width="15%">
+          </colgroup>
+          <tr style="background-color:#eeeeee; text-align: center;">
+            <th class="numId" >#</th>
+            <th class="author">작성자</th>
+            <th class="receiver">수신자</th>
+            <th class="date">작성일</th>
+          </tr>
+        </thead>
+        <tbody style="background: #FFFFFF;">
+          <% if(reviews == null || reviews.length == 0){ %>
+            <tr>
+              <td colspan=4>작성된 후기가 존재하지 않습니다.</td>
+            </tr>
+          <% } %>
+          <% reviews.forEach(function(review) { %>
+            <tr style="text-align: center;">
+              <td class="numId">
+                <a href="/reviews/<%= review._id %><%= getPostQueryString() %>" class="title-container">
+                  <div data-search-highlight="numId" class="title-ellipsis ellipsis">
+                    <span class="title-text"><%= review.numId %></span>
+                  </div>
+                </a>
+              </td>
+              <td class="author">
+                <a href="/reviews<%= getPostQueryString(false, { searchType:'author!', searchText:review.author.username }) %>">
+                  <div data-search-highlight="author" class="ellipsis"><%= review.author ? review.author.username : "" %></div>
+                </a>
+              </td>
+              <td class="receiver">
+                <a>
+                  <div data-search-highlight="receiver" class="ellipsis"><%= review.receiver %></div>
+                </a>
+              </td>
+              <td class="date">
+                <span data-date="<%= review.createdAt %>"></span>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <div class="row mb-3">
+        <div class="col-2">
+          <% if(isAuthenticated){ %>
+   
+                
+<!-- // ㅎㅎ -->
+     
+        
+        <form action="" name=""> 
+
+          <div id=""style="position: relative;transform: translate(21.5%,633%);">
+            <a type="button" OnClick="getQueryStringObject()" id="new_bt" style="background: #F6C488; border: 3px solid #787878; color: #000000;" class="btn btn-primary">글쓰기</a>
+          </div>
+  
+        </form>
+
+            <!-- <a id="new_bt" style="background: #F6C488; border: 3px solid #787878; color: #000000;" class="btn btn-primary" href="/reviews/new?toreceiver=<%= %>">글쓰기</a> -->
+           
+          <% } %>
+        </div>
+        <nav class="col-8">
+          <%
+            var offset = 2;
+            var previousBtnEnabled = currentPage>1;
+            var nextBtnEnabled = currentPage<maxPage;
+          %>
+          <ul class="pagination pagination-sm justify-content-center align-items-center h-100 mb-0">
+            <li class="page-item <%= previousBtnEnabled?'':'disabled' %>">
+              <a class="page-link" href="/reviews<%= getPostQueryString(false, {page:currentPage-1}) %>" <%= previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
+            </li>
+            <% for(i=1;i<=maxPage;i++){ %>
+              <% if(i==1 || i==maxPage || (i>=currentPage-offset && i<=currentPage+offset)){ %>
+                <li class="page-item <%= currentPage==i?'active':'' %>"><a class="page-link" href="/reviews<%= getPostQueryString(false, {page:i}) %>"> <%= i %> </a></li>
+              <% } else if(i==2 || i==maxPage-1){ %>
+                <li><a class="page-link">...</a></li>
+              <% } %>
+            <% } %>
+            <li class="page-item <%= nextBtnEnabled?'':'disabled' %>">
+              <a class="page-link" href="/reviews<%= getPostQueryString(false, {page:currentPage+1}) %>" <%= nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>

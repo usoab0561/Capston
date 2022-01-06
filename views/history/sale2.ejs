@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta charset = "UTF-8">
+      <title>토끼지마켓</title>
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+      <!-- font 설정 -->
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+      <link rel="preconnect" href="https://fonts.gstatic.com">
+      <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+      <!-- bootstrap -->
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+      <style>
+        body{
+          text-decoration: none;
+          list-style: none;
+          background-color:#FFDEB8;
+        }
+        .navbar{
+          background-color:#FFDEB8;
+          font-family: 'Nanum Gothic', sans-serif;
+        }
+        .navbar-brand > #h1{
+          color: #717171;
+          font-weight: 800;
+        }
+        .navbar-brand > #h1{
+          top:0px;
+        }
+        .navbar-brand > #h3{
+          color: #717171;
+          font-weight: 800;
+        }
+        .collapse > .navbar-nav{
+          font-family: 'Nanum Gothic', sans-serif;
+          color: #717171;
+          font-weight: 800;
+          font-size: 20px;
+        }
+        .header2 > .navbar-nav{
+          font-family: 'Nanum Gothic', sans-serif;
+          color: #717171;
+          font-weight: 800;
+          font-size: 20px;
+        }
+        .center{
+          border: 2px dashed #707070;
+          background-color: #F1FBCF;
+        }
+        #no_sale{
+          text-decoration: none;
+          list-style: none;
+          text-align: center;
+          font-size: 30px;
+          font-family:'Nanum Gothic', sans-serif;
+          color:#717171;
+          position: relative;
+          top: 20%;
+          margin: 0 auto;
+        }
+      </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarTogglerDemo01">
+          <a class="navbar-brand" href="/">
+            <span id="h1", style="font-size:30px;">토끼지마</span>
+            <span id="h2">
+              <img src="/image/carrot.png" width="35">
+            </span>
+            <span id="h3", style="font-size:30px;">켓</span>
+          </a>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page"><%= username %></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link">판매 완료 내역</a>
+            </li>
+          </ul>
+          <form class="header2 d-flex">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/users/<%= username %>">마이페이지</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">로그아웃</a>
+              </li>
+            </ul>
+          </form>
+        </div>
+      </div>
+    </nav>
+    <main class="main mt-3">
+      <div class="container center justify-content-center">
+        <div class ="row g-3 mt-3 m-5">
+          <% if(historys == null || historys.length == 0) { %>
+            <a id="no_sale">현재 판매 내역이 존재하지 않습니다.</a>
+          <% } %>
+          <% historys.forEach(function(history, index){ %>
+            <div class="col-md-4 col-lg-4 col-xlg-2 mt-3">
+              <div class="card text-center" style="width: 30rem;">
+                <% if(history.attachment) { %>
+                  <div class="attachment mt-3 p-3">
+                    <IMG width= "250" SRC="/files/<%= history.attachment.serverFileName %>/<%=history.attachment.originalFileName %> "></IMG>
+                  </div>
+                <% } %>
+                <% if(history.url1 || history.url2) { %>
+                  <% if(history.url1 && history.url2 ){ %>
+                      <div id="carousel-example-generic<%= index %>" class="carousel slide mt-3 p-3">
+                        <ol class="carousel-indicators">
+                          <li data-target="#carousel-example-generi<%= index %>" data-slide-to="0" class="active"></li>
+                          <li data-target="#carousel-example-generi<%= index %>" data-slide-to="1"></li>
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                          <div class="item active">
+                            <img src="<%= history.url1 %>" style="width:80%;">
+                          </div>
+                          <div class="item ">
+                            <img src="<%= history.url2 %>" style="width:80%;" >
+                          </div>
+                        </div>
+                        <a class="left carousel-control" href="#carousel-example-generic<%= index %>" role="button" data-slide="prev">
+                          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        </a>
+                        <a class="right carousel-control" href="#carousel-example-generic<%= index %>" role="button" data-slide="next">
+                          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        </a>
+                      </div>
+                    <% } else if (history.url1){ %>
+                      <div class="post_show_img mt-3 p-3">
+                        <IMG width="80%" height="max-height:300px;" SRC=" <%=history.url1 %>"></IMG>
+                      </div>
+                <% } else if(history.url2){ %>
+                  <div class="post_show_img mt-3 p-3">
+                    <IMG width="80%" style="max-height:300px;" SRC=" <%=history.url2 %>"></IMG>
+                  </div>
+                  <% } %>
+                  <% } else {%>
+                  <div class="post_show_img mt-3 p-3">
+                    <IMG width="80%" style="max-height:300px;"SRC="/image/noImage.png"></IMG>
+                  </div>
+                  <% } %>
+                <div class="card-body">
+                  <h5 class="card-title" style="font-family:'Nanum Gothic', sans-serif;"><%= history.title %></h5>
+                  <p class="card-text" style="font-family:'Nanum Gothic', sans-serif; text-overflow:ellipsis;"><%= history.contents %></p>
+                  <a class="btn btn-outline-dark" style="background: #F6C488; border: 3px solid #787878; color: #000000;">판매 완료</a>
+                </div>
+              </div>
+            </div>
+          <%}) %>
+        </row>
+      </div>
+    </main>
+    <script>
+      $(function () {
+      $('#carousel-example-generic').carousel({
+        interval: 3000,
+        pause: "hover",
+        wrap: true,
+        keyboard: true
+      });
+    });
+    </script>
+  </body>
+</html>

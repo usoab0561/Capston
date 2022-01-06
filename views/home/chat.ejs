@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <title>토끼지마켓</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap" rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <style>
+    body{
+      text-decoration: none;
+      list-style: none;
+      background-color:#FFDEB8;
+    }
+    .navbar{
+      background-color:#FFDEB8;
+      font-family: 'Nanum Gothic', sans-serif;
+    }
+    .navbar-brand > #h1{
+      color: #717171;
+      font-weight: 800;
+    }
+    .navbar-brand > #h1{
+      top:0px;
+    }
+    .navbar-brand > #h3{
+      color: #717171;
+      font-weight: 800;
+    }
+    .collapse > .navbar-nav{
+      font-family: 'Nanum Gothic', sans-serif;
+      color: #717171;
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .header2 > .navbar-nav{
+      font-family: 'Nanum Gothic', sans-serif;
+      color: #717171;
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .center{
+      border: 2px dashed #707070;
+      background-color: #F1FBCF;
+    }
+
+     #main_header > #image_rabbit {
+       position: absolute;
+       left: 260px;
+       top: 85px;
+     }
+
+     #main_header > #title {
+       font-family: 'Nanum Gothic', sans-serif;
+       text-align: center;
+
+       color: #717171;
+       position: absolute;
+       left: 410px;
+       top: 230px;
+     }
+
+     #main_header > #image_carrot {
+       position: absolute;
+       left: 660px;
+       top: 140px;
+     }
+
+     #main_header > #title2 {
+       font-family: 'Nanum Gothic', sans-serif;
+       text-align: center;
+
+       color: #717171;
+       position: absolute;
+       left: 800px;
+       top: 230px;
+     }
+
+     #main_header > #search {
+       width: 350px;
+       position: absolute;
+       left: 530px;
+       top: 455px;
+     }
+
+     #main_header > #search_button {
+       position: absolute;
+       left: 832px;
+       top: 457px;
+     }
+
+
+     select {
+         font-family: 'Nanum Gothic Coding', monospace;
+         border: none;
+         outline: #C2C2C2;
+         width: 150px;
+         height: 50px;
+         font-size: 30px;
+         background: #FFEEDB;
+         color: #9E9E9E;
+         text-align: center;
+         position: absolute;
+         left: 350px;
+         top: 450px;
+
+     }
+     .sent{
+        flex-direction: row-reverse;
+    }
+
+    .sent .message{
+        background-color: #ffeb33;
+    }
+    .received .message{
+        background: #fff;
+    }
+    .chat-message-sent {
+
+        color:white;
+        font-size: 20px;
+        text-align: left;
+        border: 1px solid #707070;
+        background-color: #1673FF;
+
+        border-radius: 40px 30px 30px 0px;
+        opacity: 1;
+        box-sizing: content-box;
+        width: 50%;
+        overflow: hidden;
+        float: right;
+        padding-left:3%;
+        margin: 5px;
+        font-family: "Noto Sans CJK KR", "Nanum Gothic Coding";
+
+    }
+    .chat-message-received {
+        color:black;
+        font-size: 20px;
+        text-align: white;
+        border: 1px solid #707070;
+        background-color:#B5CFF6 ;
+        border-radius: 40px 30px 0px 30px;
+        opacity: 1;
+        box-sizing: content-box;
+        width: 50%;
+        overflow: hidden;
+        float: left;
+        padding-left:3%;
+        font-family: "Noto Sans CJK KR", "Nanum Gothic Coding";
+        margin: 5px;
+
+    }
+
+   </style>
+ </head>
+ <body>
+   <header id="main_header">
+    <%- include('../partials/sim2_nav') %>
+
+
+    </header>
+
+
+
+            <div class=""
+            style="
+            width: 50%;
+            height: 100vh;
+            margin: 0 auto; /* Added */
+            float: none; /* Added */
+            margin-bottom: 10px; /* Added */">
+
+                <div id="status"></div>
+                <div id="chat" >
+                    <% if(isAuthenticated){ %>
+                        <input type="text" id="usernicknamefornotuse" class="form-control" style="border: 1px solid #707070; background: #FFFFFF; font-size: 30px; color:black; font-family: 'Segoe UI';font-weight: bold"
+                         value = "상대방 닉네임 : <%=tochatuser%>" readonly>
+                    <% } %>
+
+                    <% if(isAuthenticated){ %>
+                            <input type="hidden" id="username"
+                             value = "<%=currentUser.username%>" readonly>
+                    <% } %>
+
+
+                    <div class="card" >
+                        <!-- <p>chatroom: <%= chatroom %></p> -->
+                        <!-- 75vh로 height를 지정해서 꽉차게 채팅방 카드를 만들었다.-->
+                        <div id="messages" class="card-block" style=
+                        "overflow:scroll;  height:75vh; border: 3px solid #707070; background: #F1FBCF;
+                        background-image : url('/image/rabbit_.png');
+                        background-size: 300px;
+                        background-repeat: no-repeat;
+                        background-position: center center;
+                        ">
+                        </div>
+                    </div>
+
+
+                    <!-- <textarea id="textarea" class="form-control" placeholder="메세지를 입력하세요"></textarea> -->
+                    <div class="input-group" style="border: 3px solid #707070; background: #D1CACA;">
+                        <input type="text" id = "textarea" class="form-control" style="background: #D1CACA; font-size: 30px;"placeholder="메세지를 입력하세요" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" type="button" id = sendbtn><img src="/image/chat_send.png" width="75"></button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+    <ul id="messages" type="none">
+        <li id="usercount"></li>
+    </ul>
+
+        <!-- <button onclick="getRooms()">방 목록 가져오기</button>
+
+        <p id="rooms"></p> -->
+<!--
+        <button id="button1" onclick="joinRoom('채팅방 1');">채팅방 1</button>
+        <button id="button2" onclick="joinRoom('채팅방 2');">채팅방 2</button> -->
+
+        <!-- <select id="roomoptions" onchange="joinRoom()">
+            <option value="채팅방 1" selected>채팅방 1</option>
+            <option value="채팅방 2">채팅방 2</option>
+        </select> -->
+
+
+           <!-- <select id="roomoptions" onchange="joinRoom()">
+               <option value="채팅방 1" selected>채팅방 1</option>
+               <option value="채팅방 2">채팅방 2</option>
+           </select> -->
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
+    <!-- socekt.io 가져오는것, 필수 -->
+    <!-- <script type="text/javascript" src="https://hidden-cove-14850.herokuapp.com/socket.io/socket.io.js"></script>    -->
+    <!-- socket.io heroku -->
+
+
+
+    <script>
+
+            var element = function(id){
+                return document.getElementById(id);
+            }
+
+            // Get Elements
+            var status = element('status');
+            var messages = element('messages');
+            var textarea = element('textarea');
+            var username = element('username');
+            var clearBtn = element('clear');
+            var sendBtn = element('sendbtn');
+            var roomname = "<%= chatroom %>";  // chatindex에서 받은 채팅방을 채팅방으로 설정해줌.
+            let currentUser = "<%= currentUser.username %>";
+
+
+
+            // Set default status
+            var statusDefault = status.textContent;
+
+            var setStatus = function(s){
+                // Set status
+                status.textContent = s;
+
+                if(s !== statusDefault){
+                    var delay = setTimeout(function(){
+                        setStatus(statusDefault);
+                    }, 4000);
+                }
+            }
+
+        // Connect to socket.io
+        //var socket = io.connect('http://127.0.0.1:4000');
+        //var socket = io.connect('http://localhost:3000');
+        //var socket = io.connect(window.location.hostname);
+        // var url = 'https://hidden-cove-14850.herokuapp.com/';
+        // var socket = io.connect(url);
+        //var socket = io.connect("mongodb+srv://master:1234@boomerangdb.6v75j.mongodb.net/chatdb");
+        // var socket = io.connect(process.env.MONGO_DB);
+        var socket = io.connect();
+
+        console.log(roomname +'zzzzzzz');
+
+        socket.emit('joinRoom', roomname, roomname); // room to join을 왜 이렇게 만들었지? 기억이안난다. 하지만 잘 되네. socketleave 함수 자체가 그런듯.
+
+        // Check for connection
+            if(socket !== undefined){
+                console.log('Connected to socket...');
+
+
+
+                // Handle Output 메세지 받았을때 html에 내용을 표시해주는곳.    채팅내용 바꿀 수 있다. 쉽지.. if문써서 좌우, class . 으로 사용해서.
+                socket.on('output', function(data){
+
+
+                    //console.log(data);
+                    if(data.length){
+                        for(var x = 0;x < data.length;x++){
+                            // Build out message div
+                            var message = document.createElement('div');
+                            // 여기에서 네임의[x] value가 currenUser와 같으면 왼쪽에 나오게하고
+                            // 아니라면 오른쪽으로 나오게하기 ㅎㅎ
+
+                            if(currentUser == data[x].name){
+                            message.setAttribute('class', 'chat-message-sent');
+                            message.textContent = data[x].name+": "+data[x].message;
+                            messages.appendChild(message);
+                            //console.log(messages.firstChild) + 'zdddddooo';
+                            //messages.insertBefore(message, messages.firstChild);
+                            $('#message').insertAfter($('#messages.firstChild'));
+                            }else{
+                            message.setAttribute('class', 'chat-message-received');
+                            message.textContent = data[x].name+": "+data[x].message;
+                            messages.appendChild(message);
+                            //messages.insertBefore(message, messages.firstChild);
+                            //messages.insertBefore(message, messages.firstChild);
+                            $('#message').insertAfter($('#messages.firstChild'));
+                            }
+                            let $messageTextBox = $('#messages'); $messageTextBox.scrollTop($messageTextBox[0].scrollHeight);
+
+                        }
+                    }
+                });
+
+                                    // 접속한 룸이 바뀌었을 때
+                                    socket.on('roomChanged', (joinedRoom) => {
+                                        console.log('방바뀜');
+                                        roomname = joinedRoom;
+                                        console.log('방바뀐곳에서 룸이름' + roomname);
+                                        if(joinedRoom.length){
+                                            for(var x = 0;x < roomname.length+13;x++){
+                                    //    var messageList = document.getElementById('messages');
+                                    //    var messageTag = document.createElement("li");
+                                    //    messageTag.innerText = joinedRoom + "에 접속했습니다.";
+                                    //    messageList.appendChild(messageTag);
+                                            var message = document.createElement('div');
+                                            message.setAttribute('class', 'chat-message');
+                                            //message.textContent =  joinedRoom + "에 접속했습니다." + "\n";
+                                            console.log(joinedRoom + "에 접속했습니다.");
+                                            messages.appendChild(message);
+                                            messages.insertBefore(message, messages.firstChild);
+                                            }
+                                        }
+                                    });
+
+
+                // Get Status From Server
+                socket.on('status', function(data){
+                    // get message status
+                    setStatus((typeof data === 'object')? data.message : data);
+
+                    // If status is clear, clear text
+                    if(data.clear){
+                        textarea.value = '';
+                    }
+                });
+
+                // Handle Input
+                textarea.addEventListener('keydown', function(event){
+                    if(event.which === 13 && event.shiftKey == false){
+                        // Emit to server input
+                        socket.emit('input', {
+                            name:username.value,
+                            message:textarea.value,
+                            roomname    //rooname추가
+                        });
+
+                        event.preventDefault();
+                    }
+                })
+
+                // SendBtn
+                sendBtn.addEventListener('click', function(){
+                    socket.emit('input', {
+                            name:username.value,
+                            message:textarea.value,
+                            roomname    //rooname추가
+                        });
+
+                        event.preventDefault();
+                });
+
+                // Handle Chat Clear
+                // clearBtn.addEventListener('click', function(){
+                //     socket.emit('clear');
+                // });
+
+                // // Clear Message
+                // socket.on('cleared', function(){
+                //     messages.textContent = '';
+                // });
+            }
+
+
+
+    //     function getRooms() { // 방 목록 가져오기 버튼 클릭시
+    //        // url을 지정해서 특정 네임스페이스를 들어갈 수 있다.
+    //        console.log("hhh");
+
+
+    //        var debug = io.connect('/debug');
+
+
+    //        debug.emit('getRooms');  // getRooms 이벤트 호출
+
+    //        debug.on('rooms', (rooms) => { // rooms 이벤트 발생
+    //            // 룸 목록 업데이트
+    //            console.log("dddd");
+    //            var roomsText = document.getElementById('rooms');   // rooms element button 가져오기
+    //              var testvar = "<%= chatroom %>";
+    //            console.log(testvar);
+
+    //            roomsText.textContent = "";
+
+    //            for (var room in rooms) {
+    //                roomsText.innerHTML += room + "<br>";
+    //            }
+    //        });
+    //    }
+
+
+    //     function joinRoom(roomToJoin) { // 방 접속 버튼 클릭시
+    //     //var roomOptions = document.getElementById("roomoptions");
+    //    // var roomToJoin = roomOptions.options[roomOptions.selectedIndex].value;
+    //     //var roomToJoinVal = chan;
+    //     console.log('조인룸 함수가 실행되긴함. 근데 서버로 가는 emit이 안되네?');
+    //        // 서버에 룸 전환 신호를 발신
+    //        socket.emit('joinRoom', roomname, roomToJoin);
+    //     //   socket.emit('joinRoom', roomname, roomToJoinVal);
+
+    //    }
+
+
+    </script>
+</body>
+</html>

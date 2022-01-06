@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+    <script src="/js/script2.js"></script>
+    <meta charset = "UTF-8">
+    <title>토끼지마켓</title>
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <%- include('../partials/head') %>
+    <style>
+
+    body{
+      text-decoration: none;
+      list-style: none;
+      background-color:#FFDEB8;
+    }
+    .navbar{
+      background-color:#FFDEB8;
+      font-family: 'Nanum Gothic', sans-serif;
+    }
+    .navbar-brand > #h1{
+      color: #717171;
+      font-weight: 800;
+    }
+    .navbar-brand > #h1{
+      top:0px;
+    }
+    .navbar-brand > #h3{
+      color: #717171;
+      font-weight: 800;
+    }
+    .collapse > .navbar-nav{
+      font-family: 'Nanum Gothic', sans-serif;
+      color: #717171;
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .header2 > .navbar-nav{
+      font-family: 'Nanum Gothic', sans-serif;
+      color: #717171;
+      font-weight: 800;
+      font-size: 20px;
+    }
+    .center{
+      border: 2px dashed #707070;
+      background-color: #F1FBCF;
+    }
+
+    .row{
+      text-align: center;
+      padding: auto;
+      margin: auto;
+    }
+
+    #container {
+      text-align: center;
+      padding: auto;
+    }
+
+    #image_rabbit {
+      margin-top: -22%;
+      margin-left: 18%;
+    }
+
+    #title {
+      font-family: 'Nanum Gothic', sans-serif;
+      font-weight: 800;
+      color: #717171;
+      margin-top: 15%;
+      margin-left: 30%;
+    }
+
+    #image_carrot {
+      margin-top: -17%;
+      margin-left: 52%;
+    }
+
+    #title2 {
+      font-family: 'Nanum Gothic', sans-serif;
+      font-weight: 800;
+      color: #717171;
+      margin-top: -5%;
+      margin-left: 63%;
+    }
+
+     #search {
+       width: 350px;
+       margin-top: 5%;
+       margin-left: 28%;
+     }
+
+     #search_btn {
+       margin-top: -4.7%;
+       margin-left: 62%;
+     }
+
+   </style>
+ </head>
+ <body>
+   <header id="main_header">
+    <%- include('../partials/nav') %>
+
+    <script>
+     function enter(){
+
+          // 엔터키의 코드는 13입니다.
+          if(event.keyCode == 13){
+            searchsCheck();
+          return;
+          }
+          }
+
+
+      function searchsCheck() {
+
+         var searchs = document.f1.searchs.value;
+
+         location.href="posts?searchText="+searchs+"&limit=10&searchType=title%2Cbody";
+
+      }
+      </script>
+      <div class="container">
+
+        <div id="title">
+            <h1 style="font-size: 70px;">토끼지마</h1>
+        </div>
+        <div id="image_carrot">
+            <img src="/image/carrot.png" width="150" alt="carrot">
+        </div>
+        <div id="image_rabbit">
+            <img src="/image/rabbit.png" width="150" alt="rabbit">
+        </div>
+        <div id="title2">
+            <h1 style="font-size: 70px;">켓</h1>
+        </div>
+
+        <!-- 그냥 submit했을때 search로 input이 되니까 일단 막아버리고,
+        text에서 enter키를 눌렀을때 함수실행되게 enter()함수랑 searchCheck만듦. -->
+        <form action="" name="f1" onsubmit="return false;">
+        <div id="search" >
+          <input onkeyPress="enter();"name="searchs" type="text" minLength="1" style="font-size: 30px; border: 3px solid #C2C2C2; background: #FFEEDB;" placeholder="상품을 검색하세요." />
+        </div>
+        <div id="search_btn">
+          <button type="button" OnClick="searchsCheck()"><img src="/image/search.png" width="40"></button>
+        </div>
+
+        </form>
+      </div>
+    </header>
+  </body>
+</html>

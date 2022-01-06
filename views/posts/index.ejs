@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <%- include('../partials/head') %>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;700;800&family=Noto+Sans+KR:wght@300;500;700;900&display=swap"
+      rel="stylesheet">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <style>
+      a:link {
+        color: #000000;
+        text-decoration: none;
+      }
+
+      a:visited {
+        color: black;
+        text-decoration: none;
+      }
+
+      a:hover {
+        color: black;
+        text-decoration: none;
+      }
+
+      body {
+        margin: auto;
+        text-decoration: none;
+        list-style: none;
+        background-color: #FFDEB8;
+      }
+
+      .navbar {
+        background-color: #FFDEB8;
+        font-family: 'Nanum Gothic', sans-serif;
+      }
+
+      .navbar-brand>#h1 {
+        color: #717171;
+        font-weight: 800;
+      }
+
+      .navbar-brand>#h1 {
+        top: 0px;
+      }
+
+      .navbar-brand>#h3 {
+        color: #717171;
+        font-weight: 800;
+      }
+
+      .collapse>.navbar-nav {
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+
+      .header2>.navbar-nav {
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-weight: 800;
+        font-size: 20px;
+      }
+
+      .center {
+        border: 2px dashed #707070;
+        background-color: #F1FBCF;
+      }
+
+      #container {
+        font-family: 'Nanum Gothic', sans-serif;
+        color: #717171;
+        font-size: 18px;
+      }
+
+      .pagination>.active>a {
+        color: white;
+        background-color: #7a7a7a !Important;
+      }
+    </style>
+</head>
+
+<body>
+  <%- include('../partials/sim2_nav') %>
+    <!-- 여기부분을 추가해주니까 바로 됐음. 이미 되어있었기 때문. ㄷㄷ-->
+    <form action=" /posts" method="get" class="" style="text-align: center;">
+      <div class="form">
+        <div class="form-group" style="margin:auto;text-align: center;display: inline-block;">
+
+          <div class="input-group" style="margin:auto; text-align: center;">
+            <input size="50%" minLength="1" type="text" name="searchText" value="<%= searchText %>"
+              style="text-align: center;  font-family: 'Nanum Gothic Coding', monospace; font-size: 15px; border: 3px solid #C2C2C2; background: #FFEEDB;  ">
+            <input type="hidden" name="limit" value="<%= 10 %>">
+            <input type="hidden" name="searchType" value="title,body,author!">
+            <!-- hidden해서 자동으로 넣어줬다. -->
+            <div class="input-group-append">
+              <button class="btn btn-outline-primary" type="submit"
+                style="background: #F6C488; border: 3px solid #787878; color: #000000;">검색</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+
+    <div id="container" class="container">
+
+      <h2 class="mb-3"></h2>
+
+      <table class="board-table table table-md " style=" border: 1px solid #444444; padding: auto; margin:auto;">
+        <thead class="thead-light" style="background-color:#eeeeee; text-align:center;">
+          <colgroup id="hz">
+            <col width="10%">
+            <col width="30%">
+            <col width="25%">
+            <col width="10%">
+            <col width="10%">
+            <col width="15%">
+            <col width="10%">
+            <col width="10%">
+          </colgroup>
+          <tr style="background-color:#eeeeee; text-align: center; ">
+            <th class="numId">#</th>
+            <th class="title">제목</th>
+            <th class="attachment">물품 사진</th>
+            <th class="view">가격</th>
+            <th class="author">작성자</th>
+            <th class="date">작성일</th>
+            <th class="status">상태</th>
+            <th class="price">조회수</th>
+          </tr>
+        </thead>
+        <tbody style="background: #ffffff; border: 1px solid #444444; padding: 10px; ">
+          <% if(posts==null || posts.length==0){ %>
+            <tr>
+              <td colspan=5>작성된 게시물이 존재하지 않습니다.</td>
+            </tr>
+            <% } %>
+              <% posts.forEach(function(post) { %>
+
+                <tr height="100" align="center">
+                  <td class="numId">
+                    <%= post.numId %>
+                  </td>
+                  <td class="title" style="font-size: 28px; color:#000000">
+                    <a href="/posts/<%= post._id %><%= getPostQueryString() %>" class="title-container">
+                      <div data-search-highlight="title" class="title-ellipsis ellipsis float-left">
+                        <span class="title-text">
+                          <%= post.title %>
+                        </span>
+                      </div>
+                      <!--
+                  <% if(post.commentCount){ %>
+                    <small class="title-comments d-inline-block pl-2">(<%= post.commentCount %>)</small>
+                  <% } %>-->
+                    </a>
+                  </td>
+                  <td class="attachment">
+                    <% if(post.url1) { %>
+                      <div class="attachment">
+                        <IMG height="100px" SRC="<%=post.url1 %> "></IMG>
+                      </div><% } else {%>
+                        <IMG height="100px" SRC="/image/noImage.png"></IMG>
+                        <% } %>
+                  </td>
+                  <td>
+                    <% if(post.price>=1) {%>
+                      <span>
+                        <%= post.price %>원
+                      </span>
+                      <% }%>
+                  </td>
+                  <td class="author">
+                    <a href="/reviews/<%= post.author.username %>/myreview">
+                      <div data-search-highlight="author" class="ellipsis">
+                        <%= post.author ? post.author.username : "" %>
+                      </div>
+                    </a>
+                  </td>
+                  <td class="date">
+                    <span data-date="<%= post.createdAt %>"></span>
+                  </td>
+                  <td class="status">
+                    <% if(post.status==false){ %>
+                      <span>판매</span>
+                      <% } %>
+                        <% if(post.status==true) {%>
+                          <span>예약</span>
+                          <% }%>
+                  </td>
+                  <td class="view">
+                    <%= post.views %>
+                  </td>
+
+                </tr>
+                <% }) %>
+        </tbody>
+      </table>
+      <div class="row mb-3" style="padding-top:10px; text-align: right;">
+        <div class="col-12">
+          <% if(isAuthenticated){ %>
+            <a id="new_bt" style="background: #F6C488; border: 3px solid #787878; color: #000000;"
+              class="btn btn-primary" href="/posts/new<%= getPostQueryString() %>">글쓰기</a>
+            <% } %>
+        </div>
+        <nav class="col-12">
+          <% var offset=2; var previousBtnEnabled=currentPage>1;
+            var nextBtnEnabled = currentPage<maxPage; %>
+              <ul class="pagination pagination-sm justify-content-center align-items-center h-100 mb-0">
+                <li class="page-item <%= previousBtnEnabled?'':'disabled' %>">
+                  <a class="page-link" href="/posts<%= getPostQueryString(false, {page:currentPage-1}) %>"
+                    <%=previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
+                </li>
+                <% for(i=1;i<=maxPage;i++){ %>
+                  <% if(i==1 || i==maxPage || (i>=currentPage-offset && i<=currentPage+offset)){ %>
+                      <li class="page-item <%= currentPage==i?'active':'' %>" style="background: #787878;"><a
+                          class="page-link" href="/posts<%= getPostQueryString(false, {page:i}) %>">
+                          <%= i %>
+                        </a></li>
+                      <% } else if(i==2 || i==maxPage-1){ %>
+                        <li><a class="page-link">...</a></li>
+                        <% } %>
+                          <% } %>
+                            <li class="page-item <%= nextBtnEnabled?'':'disabled' %>">
+                              <a class="page-link" href="/posts<%= getPostQueryString(false, {page:currentPage+1}) %>"
+                                <%=nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
+                            </li>
+              </ul>
+        </nav>
+      </div>
+      <form action="/posts" method="get" class="post-index-tool">
+        <div class="form-row">
+          <div id="view_select" class="form-group col-3">
+            <label>보기</label>
+            <select name="limit" class="custom-select"
+              onchange="this.parentElement.parentElement.parentElement.submit()">
+              <option value="5" <%=limit==5?'selected':'' %>>5 posts</option>
+              <option value="10" <%=limit==10?'selected':'' %>>10 posts</option>
+              <option value="20" <%=limit==20?'selected':'' %>>20 posts</option>
+            </select>
+          </div>
+
+        </div>
+      </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</body>
+
+</html>

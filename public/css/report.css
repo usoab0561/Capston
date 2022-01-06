@@ -1,0 +1,21 @@
+body {
+    background-color: #FFDEB8;
+}
+
+.container {
+}
+
+.container > #title {
+  position: relative;
+  font-family: 'HYGothic-Extra';
+  font-weight: bold;
+  color: #787878;
+  font-size: 30px;
+  top: 100px;
+}
+
+.container > #cyberurl {
+  position: relative;
+  font-family:'Noto Sans KR', sans-serif;
+  font-size: 10px;
+}
